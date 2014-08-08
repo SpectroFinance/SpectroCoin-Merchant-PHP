@@ -1,7 +1,7 @@
 SpectroCoin-Merchant-PHP
 ========================
 
-Sample PHP API client for communicating with Spectro Coin Merchant API service. [API specification](http://spectrofinance.github.io/SpectroCoin-Merchant-API/).
+Sample PHP API client for communicating with [Spectro Coin](https://spectrocoin.com) Merchant API service. [API specification](http://spectrofinance.github.io/SpectroCoin-Merchant-API/).
 
 # Contents
 
