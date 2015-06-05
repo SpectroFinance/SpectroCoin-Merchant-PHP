@@ -10,6 +10,6 @@ class FormattingUtil {
 	{
 		$decimals = strlen(substr(strrchr(rtrim(sprintf('%.8f', $amount), '0'), "."), 1));
 		$decimals = $decimals < 1 ? 1 : $decimals;
-		return number_format($amount, $decimals);
+		return number_format($amount, $decimals, '.', '');
 	}
 } 
