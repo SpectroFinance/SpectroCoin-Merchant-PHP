@@ -2,7 +2,7 @@
 
 /**
  * Created by UAB Spectro Fincance.
- * This is a sample SpectroCoin Merchant v1.0 API PHP client
+ * This is a sample SpectroCoin Merchant v1.1 API PHP client
  */
 
 include_once('httpful.phar');
@@ -19,7 +19,6 @@ class SCMerchantClient
 
 	private $merchantApiUrl;
 	private $privateMerchantCertLocation;
-	private $publicMerchantCertLocation;
 	private $publicSpectroCoinCertLocation;
 
 	private $merchantId;
@@ -35,7 +34,6 @@ class SCMerchantClient
 	function __construct($merchantApiUrl, $merchantId, $apiId, $debug = false)
 	{
 		$this->privateMerchantCertLocation = dirname(__FILE__) . '/../cert/mprivate.pem';
-		$this->publicMerchantCertLocation = dirname(__FILE__) . '/../cert/mpublic.pem';
 		$this->publicSpectroCoinCertLocation = 'https://spectrocoin.com/files/merchant.public.pem';
 		$this->merchantApiUrl = $merchantApiUrl;
 		$this->merchantId = $merchantId;
@@ -55,6 +53,7 @@ class SCMerchantClient
 			'orderId' => $request->getOrderId(),
 			'payCurrency' => $request->getPayCurrency(),
 			'payAmount' => $request->getPayAmount(),
+			'receiveCurrency' => $request->getReceiveCurrency(),
 			'receiveAmount' => $request->getReceiveAmount(),
 			'description' => $request->getDescription(),
 			'culture' => $request->getCulture(),

@@ -10,13 +10,15 @@ include_once('constants.php');
 include_once('SCMerchantClient/SCMerchantClient.php');
 
 $orderId = null;// "Order005";
-$payAmount = 0.00025; // Customer would pay in BTC
-$receiveAmount = null;//1; // Merchant would receive in BTC/EUR
+$payCurrency = 'BTC'; // Customer pay amount calculation currency
+$payAmount = null;//0.00025; // Customer pay amount in calculation currency
+$receiveCurrency = 'USD'; // Merchant receive amount calculation currency
+$receiveAmount = 9.99; // Merchant receive amount in calculation currency
 $description = "Order 'Order001' at www.merchant.com";
 $culture = "en";
 
-$scMerchantClient = new SCMerchantClient(SC_API_URL, SC_MERCHANT_ID, SC_MERCHANT_API_ID, false);
-$createOrderRequest = new CreateOrderRequest($orderId, $payAmount, $receiveAmount, $description, $culture, SC_MERCHANT_ORDER_CALLBACK_URL, SC_MERCHANT_ORDER_SUCCESS_URL, SC_MERCHANT_ORDER_FAILURE_URL);
+$scMerchantClient = new SCMerchantClient(SC_API_URL, SC_MERCHANT_ID, SC_MERCHANT_API_ID);
+$createOrderRequest = new CreateOrderRequest($orderId, $payCurrency, $payAmount, $receiveCurrency, $receiveAmount, $description, $culture, SC_MERCHANT_ORDER_CALLBACK_URL, SC_MERCHANT_ORDER_SUCCESS_URL, SC_MERCHANT_ORDER_FAILURE_URL);
 $createOrderResponse = $scMerchantClient->createOrder($createOrderRequest);
 
 if ($createOrderResponse instanceof ApiError) {

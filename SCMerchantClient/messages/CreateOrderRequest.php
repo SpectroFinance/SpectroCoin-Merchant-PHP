@@ -5,6 +5,7 @@ class CreateOrderRequest
 	private $orderId;
 	private $payCurrency;
 	private $payAmount;
+	private $receiveCurrency;
 	private $receiveAmount;
 	private $description;
 	private $culture;
@@ -14,26 +15,28 @@ class CreateOrderRequest
 
 	/**
 	 * @param $orderId
-	 * @param $payAmount
-	 * @param $receiveAmount
+	 * @param $payCurrency - Customer pay amount calculation currency
+	 * @param $payAmount - Customer pay amount in calculation currency
+	 * @param $receiveCurrency - Merchant receive amount calculation currency
+	 * @param $receiveAmount - Merchant receive amount in calculation currency
 	 * @param $description
 	 * @param $culture
 	 * @param $callbackUrl
 	 * @param $successUrl
 	 * @param $failureUrl
-	 * @param string $payCurrency
 	 */
-	function __construct($orderId, $payAmount, $receiveAmount, $description, $culture, $callbackUrl, $successUrl, $failureUrl, $payCurrency = 'BTC')
+	function __construct($orderId, $payCurrency, $payAmount, $receiveCurrency, $receiveAmount, $description, $culture, $callbackUrl, $successUrl, $failureUrl)
 	{
 		$this->orderId = $orderId;
+		$this->payCurrency = $payCurrency;
 		$this->payAmount = $payAmount;
+		$this->receiveCurrency = $receiveCurrency;
 		$this->receiveAmount = $receiveAmount;
 		$this->description = $description;
 		$this->culture = $culture;
 		$this->callbackUrl = $callbackUrl;
 		$this->successUrl = $successUrl;
 		$this->failureUrl = $failureUrl;
-		$this->payCurrency = $payCurrency;
 	}
 
 	/**
@@ -66,6 +69,14 @@ class CreateOrderRequest
 	public function getReceiveAmount()
 	{
 		return FormattingUtil::formatCurrency($this->receiveAmount == null ? 0.0 : $this->receiveAmount);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getReceiveCurrency()
+	{
+		return $this->receiveCurrency;
 	}
 
 	/**
