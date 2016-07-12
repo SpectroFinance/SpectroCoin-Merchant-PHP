@@ -25,6 +25,7 @@ class SCMerchantClient
 	private $apiId;
 	private $debug;
 
+	private $privateMerchantKey;
 	/**
 	 * @param $merchantApiUrl
 	 * @param $merchantId
@@ -41,6 +42,12 @@ class SCMerchantClient
 		$this->debug = $debug;
 	}
 
+	/**
+	 * @param $privateKey
+	 */
+	public function setPrivateMerchantKey($privateKey) {
+		$this->privateMerchantKey = $privateKey;
+	}
 	/**
 	 * @param CreateOrderRequest $request
 	 * @return ApiError|CreateOrderResponse
@@ -86,8 +93,7 @@ class SCMerchantClient
 
 	private function generateSignature($data)
 	{
-		// fetch private key from file and ready it
-		$privateKey = file_get_contents($this->privateMerchantCertLocation);
+		$privateKey = $this->privateMerchantKey != null ? $this->privateMerchantKey : file_get_contents($this->privateMerchantCertLocation);
 		$pkeyid = openssl_pkey_get_private($privateKey);
 
 		// compute signature
