@@ -105,58 +105,58 @@ class SCMerchantClient
 		return $encodedSignature;
 	}
 
-	/**
-	 * @param $r $_REQUEST
-	 * @return OrderCallback|null
-	 */
-	public function parseCreateOrderCallback($r)
-	{
-		$result = null;
+    /**
+     * @param $r $_REQUEST
+     * @return OrderCallback|null
+     */
+    public function parseCreateOrderCallback($r)
+    {
+        $result = null;
 
-		if ($r != null && isset($r['userId'], $r['merchantApiId'], $r['orderId'], $r['payCurrency'], $r['payAmount'], $r['receiveCurrency'], $r['receiveAmount'], $r['receivedAmount'], $r['description'], $r['orderRequestId'], $r['status'], $r['sign'])) {
-			$result = new OrderCallback($r['userId'], $r['merchantApiId'], $r['orderId'], $r['payCurrency'], $r['payAmount'], $r['receiveCurrency'], $r['receiveAmount'], $r['receivedAmount'], $r['description'], $r['orderRequestId'], $r['status'], $r['sign']);
-		}
+        if ($r != null && isset($r['userId'], $r['merchantApiId'], $r['orderId'], $r['payCurrency'], $r['payAmount'], $r['receiveCurrency'], $r['receiveAmount'], $r['receivedAmount'], $r['description'], $r['orderRequestId'], $r['status'], $r['sign'])) {
+            $result = new OrderCallback($r['merchantId'], $r['merchantApiId'], $r['userId'], $r['apiId'], $r['orderId'], $r['payCurrency'], $r['payAmount'], $r['receiveCurrency'], $r['receiveAmount'], $r['receivedAmount'], $r['description'], $r['orderRequestId'], $r['status'], $r['sign']);
+        }
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * @param OrderCallback $c
-	 * @return bool
-	 */
-	public function validateCreateOrderCallback(OrderCallback $c)
-	{
-		$valid = false;
+    /**
+     * @param OrderCallback $c
+     * @return bool
+     */
+    public function validateCreateOrderCallback(OrderCallback $c)
+    {
+        $valid = false;
 
-		if ($c != null) {
+        if ($c != null) {
 
-			if ($this->userId != $c->getuserId() || $this->merchantApiId != $c->getmerchantApiId())
-				return $valid;
+            if ($this->userId != $c->getUserId() || $this->merchantApiId != $c->getMerchantApiId())
+                return $valid;
 
-			if (!$c->validate())
-				return $valid;
+            if (!$c->validate())
+                return $valid;
 
-			$payload = array(
-				'userId' => $c->getuserId(),
-				'merchantApiId' => $c->getmerchantApiId(),
-				'orderId' => $c->getOrderId(),
-				'payCurrency' => $c->getPayCurrency(),
-				'payAmount' => $c->getPayAmount(),
-				'receiveCurrency' => $c->getReceiveCurrency(),
-				'receiveAmount' => $c->getReceiveAmount(),
-				'receivedAmount' => $c->getReceivedAmount(),
-				'description' => $c->getDescription(),
-				'orderRequestId' => $c->getOrderRequestId(),
-				'status' => $c->getStatus(),
-			);
+            $payload = array(
+                'merchantId' => $c->getMerchantId(),
+                'apiId' => $c->getApiId(),
+                'orderId' => $c->getOrderId(),
+                'payCurrency' => $c->getPayCurrency(),
+                'payAmount' => $c->getPayAmount(),
+                'receiveCurrency' => $c->getReceiveCurrency(),
+                'receiveAmount' => $c->getReceiveAmount(),
+                'receivedAmount' => $c->getReceivedAmount(),
+                'description' => $c->getDescription(),
+                'orderRequestId' => $c->getOrderRequestId(),
+                'status' => $c->getStatus(),
+            );
 
-			$formHandler = new \Httpful\Handlers\FormHandler();
-			$data = $formHandler->serialize($payload);
-			$valid = $this->validateSignature($data, $c->getSign());
-		}
+            $formHandler = new \Httpful\Handlers\FormHandler();
+            $data = $formHandler->serialize($payload);
+            $valid = $this->validateSignature($data, $c->getSign());
+        }
 
-		return $valid;
-	}
+        return $valid;
+    }
 
 	/**
 	 * @param $data
