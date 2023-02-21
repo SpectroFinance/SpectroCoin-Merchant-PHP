@@ -1,6 +1,12 @@
 SpectroCoin-Merchant-PHP
 ========================
 
+**MOVED**
+
+Up to date version can be found in [SpectroCoin Repo](https://github.com/SpectroCoin/Bitcoin-Merchant-PHP)
+
+---------------
+
 Sample PHP API client for communicating with [Spectro Coin](https://spectrocoin.com) Merchant API service. [API specification](http://spectrofinance.github.io/SpectroCoin-Merchant-API/).
 
 # Contents
